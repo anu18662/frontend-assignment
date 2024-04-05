@@ -1,0 +1,47 @@
+  const todoColumn = document.getElementById('todoColumn');
+  const fruitColumn = document.getElementById('fruitColumn');
+  const vegetableColumn = document.getElementById('vegetableColumn');
+
+  const items = [
+    { type: 'Fruit', name: 'Apple' },
+    { type: 'Vegetable', name: 'Broccoli' },
+    { type: 'Vegetable', name: 'Mushroom' },
+    { type: 'Fruit', name: 'Banana' },
+    { type: 'Vegetable', name: 'Tomato' },
+    { type: 'Fruit', name: 'Orange' },
+    { type: 'Fruit', name: 'Mango' },
+    { type: 'Fruit', name: 'Pineapple' },
+    { type: 'Vegetable', name: 'Cucumber' },
+    { type: 'Fruit', name: 'Watermelon' },
+    { type: 'Vegetable', name: 'Carrot' }
+  ];
+
+  items.forEach(item => {
+    const button = document.createElement('button');
+    button.innerText = item.name;
+    button.classList.add('button');
+    button.dataset.type = item.type;
+    button.addEventListener('click', () => moveItem(button));
+    todoColumn.appendChild(button);
+  });
+
+  function moveItem(button) {
+    const type = button.dataset.type;
+    const targetColumn = type === 'Fruit' ? fruitColumn : vegetableColumn;
+    targetColumn.appendChild(button);
+    setTimeout(() => {
+      todoColumn.appendChild(button);
+    }, 5000);
+  }
+
+  fruitColumn.addEventListener('click', (event) => {
+    if (event.target.classList.contains('button')) {
+      todoColumn.appendChild(event.target);
+    }
+  });
+
+  vegetableColumn.addEventListener('click', (event) => {
+    if (event.target.classList.contains('button')) {
+      todoColumn.appendChild(event.target);
+    }
+  });
