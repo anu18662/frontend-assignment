@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoDeleteTodoList</title>
+
+<!-- -----------------Strat CSS ------------------------>
+<style>
+  .container {
+    display: flex;
+    justify-content: space-between;
+  }
+  .column {
+    flex: 1;
+    padding: 10px;
+    margin: 5px;
+    width:33%;
+  }
+  .button {
+    margin: 5px;
+    padding: 10px;
+    cursor: pointer;
+    width: 99% ;
+  }
+</style>
+<!-- -----------------End CSS ---------------------- -->
+
+</head>
+<body>
+<div class="container">
+  <div class="column" id="todoColumn">
+  </div>
+  <div class="column" style="border: 1px solid #ccc;"  id="fruitColumn">
+    <div class="card" style="background-color: #f0f0f0; text-align: center;">
+        <h1 style="margin: 0;">Fruit</h1>
+      </div>
+  </div>
+  <div class="column" style="border: 1px solid #ccc; " id="vegetableColumn">
+    <div class="card" style="background-color: #f0f0f0; text-align: center;">
+        <h1 style="margin: 0;">Vegetable</h1>
+    </div>
+  </div>
+</div>
+
+<!------------------- Strat JS ------------------------>
+<script>
+  const todoColumn = document.getElementById('todoColumn');
+  const fruitColumn = document.getElementById('fruitColumn');
+  const vegetableColumn = document.getElementById('vegetableColumn');
+
+<!------------------- สร้างปุ่ม ------------------------>
+  const items = [
+    { type: 'Fruit', name: 'Apple' },
+    { type: 'Vegetable', name: 'Broccoli' },
+    { type: 'Vegetable', name: 'Mushroom' },
+    { type: 'Fruit', name: 'Banana' },
+    { type: 'Vegetable', name: 'Tomato' },
+    { type: 'Fruit', name: 'Orange' },
+    { type: 'Fruit', name: 'Mango' },
+    { type: 'Fruit', name: 'Pineapple' },
+    { type: 'Vegetable', name: 'Cucumber' },
+    { type: 'Fruit', name: 'Watermelon' },
+    { type: 'Vegetable', name: 'Carrot' }
+  ];
+
+  items.forEach(item => {
+    const button = document.createElement('button');
+    button.innerText = item.name;
+    button.classList.add('button');
+    button.dataset.type = item.type;
+    button.addEventListener('click', () => moveItem(button));
+    todoColumn.appendChild(button);
+  });
+
+// ฟังชันท์ย้ายปุ่ม ว่าถ้า คลิกปุ่ม type fruit ให้ไปอยู่คอลัมของ fruit และ
+// ถ้าคลิกปุ่ม type vegetable ให้ไปอยู่คอลัมของ vegetable
+  function moveItem(button) {
+    const type = button.dataset.type;
+    const targetColumn = type === 'Fruit' ? fruitColumn : vegetableColumn;
+    targetColumn.appendChild(button);
+    setTimeout(() => {
+      todoColumn.appendChild(button);
+    }, 5000); //ตั้งเวลารายการนั้นจะถูกย้ายกลับ 5 วินาที
+  }
+
+  fruitColumn.addEventListener('click', (event) => {
+    if (event.target.classList.contains('button')) {
+      todoColumn.appendChild(event.target);
+    }
+  });
+
+  vegetableColumn.addEventListener('click', (event) => {
+    if (event.target.classList.contains('button')) {
+      todoColumn.appendChild(event.target);
+    }
+  });
+</script>
+<!------------------- End JS ------------------------>
+
+</body>
+</html>
